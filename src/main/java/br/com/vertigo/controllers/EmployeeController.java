@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.entities.Employee;
 import br.com.vertigo.services.EmployeeService;
 
@@ -22,13 +23,12 @@ public class EmployeeController {
 	
 
 	@GetMapping
-	public ResponseEntity<List<Employee>> findAll() {
-		List<Employee> listEmployees = service.findAll();
-		return ResponseEntity.ok(listEmployees);
+	public ResponseEntity<List<EmployeeDTO>> findAll() {
+		return ResponseEntity.ok(service.findAll());
 	}
 
 	@GetMapping(value = "/{id}")
-	public Employee findById(@PathVariable("id") Integer id) {
+	public EmployeeDTO findById(@PathVariable("id") String id) {
 		return service.findById(id);
 	}
 	
