@@ -10,16 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
 @Table(name = "employees")
+@Entity
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
 	@Column(name = "employee_id")
-	private Integer id;
+	private Integer employeeId;
 
 	@Column(name = "first_name", length = 45)
 	private String firstName;
@@ -49,10 +51,10 @@ public class Employee implements Serializable {
 		super();
 	}
 
-	public Employee(Integer id, String firstName, String lastName, String department, String jobTitle,
+	public Employee(Integer employeeId, String firstName, String lastName, String department, String jobTitle,
 			String employeeType, Date startDate, String status, String email) {
 		super();
-		this.id = id;
+		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.department = department;
@@ -61,18 +63,6 @@ public class Employee implements Serializable {
 		this.startDate = startDate;
 		this.status = status;
 		this.email = email;
-	}
-
-	public Employee(Employee emp) {
-		id = emp.getId();
-		firstName = emp.getFirstName();
-		lastName = emp.getFirstName();
-		department = emp.getDepartment();
-		jobTitle = emp.getJobTitle();
-		employeeType = emp.getEmployeeType();
-		startDate = emp.getStartDate();
-		status = emp.getStatus();
-		email = emp.getEmail();
 	}
 
 	public String getFirstName() {
@@ -140,7 +130,7 @@ public class Employee implements Serializable {
 	}
 
 	public Integer getId() {
-		return id;
+		return employeeId;
 	}
 
 }

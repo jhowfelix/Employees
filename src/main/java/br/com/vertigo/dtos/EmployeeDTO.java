@@ -1,12 +1,16 @@
 package br.com.vertigo.dtos;
 
+import java.io.Serializable;
 import java.sql.Date;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.vertigo.entities.Employee;
 
-public class EmployeeDTO {
+public class EmployeeDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	private Integer employeeId;
 	private String firstName;
 	private String lastName;
 	private String department;
@@ -16,10 +20,14 @@ public class EmployeeDTO {
 	private String status;
 	private String email;
 
-	public EmployeeDTO(Integer id, String firstName, String lastName, String department, String jobTitle,
+	public EmployeeDTO() {
+		super();
+	}
+
+	public EmployeeDTO(Integer employeeId, String firstName, String lastName, String department, String jobTitle,
 			String employeeType, Date startDate, String status, String email) {
 		super();
-		this.id = id;
+		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.department = department;
@@ -29,9 +37,9 @@ public class EmployeeDTO {
 		this.status = status;
 		this.email = email;
 	}
-	
+
 	public EmployeeDTO(Employee emp) {
-		id = emp.getId();
+		employeeId = emp.getId();
 		firstName = emp.getFirstName();
 		lastName = emp.getFirstName();
 		department = emp.getDepartment();
@@ -41,20 +49,18 @@ public class EmployeeDTO {
 		status = emp.getStatus();
 		email = emp.getEmail();
 	}
-	
+
 	public Employee toEntity() {
-		return new Employee(this.id, this.firstName, this.lastName, 
-				this.department, this.jobTitle,
-				this.employeeType, this.startDate,
-				this.status, this.email);
+		return new Employee(this.employeeId, this.firstName, this.lastName, this.department, this.jobTitle,
+				this.employeeType, this.startDate, this.status, this.email);
 	}
 
 	public Integer getId() {
-		return id;
+		return employeeId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.employeeId = id;
 	}
 
 	public String getFirstName() {

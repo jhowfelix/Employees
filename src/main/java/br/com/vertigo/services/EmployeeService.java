@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.entities.Employee;
 import br.com.vertigo.repositories.EmployeeRepository;
+import br.com.vertigo.services.exceptions.BadRequests;
+import br.com.vertigo.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class EmployeeService {
@@ -22,10 +24,39 @@ public class EmployeeService {
 		return findAll.stream().map(x -> new EmployeeDTO(x)).collect(Collectors.toList());
 	}
 
-	public EmployeeDTO findById(String id) {
-		Optional<Employee> findById = repo.findById(Integer.valueOf(id));
-		Employee emp = new Employee(findById.get());
+	public EmployeeDTO findById(int id) {
+		Optional<Employee> findById = repo.findById(id);
+		findById.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+		Employee emp = findById.get();
 		return new EmployeeDTO(emp);
+	}
+
+	public EmployeeDTO update(int id, EmployeeDTO empDTO) {
+		try {
+			EmployeeDTO emp = findById(id);
+			emp.setId(id);
+			emp.setFirstName(empDTO.getFirstName());
+			emp.setLastName(empDTO.getLastName());
+			emp.setDepartment(empDTO.getDepartment());
+			emp.setJobTitle(empDTO.getJobTitle());
+			emp.setEmployeeType(empDTO.getEmployeeType());
+			emp.setStartDate(empDTO.getStartDate());
+			emp.setStatus(empDTO.getStatus());
+			emp.setEmail(empDTO.getEmail());
+			repo.save(emp.toEntity());
+			return emp;
+		} catch (BadRequests e) {
+			throw new BadRequests("Sintaxe errada");
+		}
+	}
+
+	public void insert(EmployeeDTO emp) {
+		repo.save(emp.toEntity());
+	}
+
+	public void delet(int id) {
+		findById(id);
+		repo.deleteById(id);
 	}
 
 }
