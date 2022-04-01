@@ -1,0 +1,257 @@
+openapi: 3.0.1
+info: 
+  title: "CRUD DE UM FUNCIONÁRIO."
+  description: "Ler, cadastrar, editar e deletar um funcionário do banco de dados"
+  version: 0.0.4
+  contact:
+    name: "Vertigo tecnologia"
+    email: suport@vertigo.com.br
+    url: https://vertigo.com.br/
+  license: 
+    name: "LICENÇA: GPLV3"
+    url: https://gplv3.fsf.org/
+externalDocs:
+  description: "Documentação burocrática."
+  url: https://vertigo.com.br/
+servers:
+- url: https://623c91787efb5abea6836f4c.mockapi.io/CRUD/
+  description: "MockAPI, api de teste"
+paths:
+  /employee:    ## BUSCAR TODOS, INSERIR UM NOVO.
+    get: 
+      tags:
+        - "Funcionário"
+      summary: "Buscando todos funcionários da nossa base de dados."
+      responses: 
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+                
+        "500":
+          description: "Erro interno."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+               
+                
+    post:
+      tags:
+        - "Funcionário"
+      summary: "Cadastrar um novo funcionário." 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses: 
+        "201":
+          description: "Criado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          description: "Preencha os campos corretamente."
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/errorModel"
+ 
+    ## BUSCAR TODOS, DELETAR, E ATUALIZAR. 
+    
+  /employee/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+      
+              ## BUSCAR POR ID. 
+    get: 
+      tags:
+      - "Funcionário"
+      summary: "Buscando um funcionário por meio do ID."
+      responses:
+        "200": 
+          description: "OK"
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: "Nenhum funcionário com esse ID encontrado."
+          content:
+            aplication/json:
+              schema: 
+                 $ref: "#/components/schemas/NotFound"
+        "400":
+          description: "Preencha os campos corretamente."
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BadRequest"
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/errorModel"
+        
+               ## DELETAR
+    delete:
+      tags:
+        - "Funcionário"
+      summary: "Deletar um funcionário por meio do ID"
+      responses:
+        "204":
+          description: "OK"
+          content: 
+            application/json:
+              example: "No content"
+        
+        "404":
+          description: "Nenhum funcionário com esse ID encontrado."
+          content:
+            aplication/json:
+              schema: 
+                $ref: "#/components/schemas/NotFound"
+                
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/errorModel"        
+               
+                ## ATUALIZAR
+    put:
+      tags:
+        - "Funcionário"
+      summary: "Atualizar os dados de um funcionário por meio do ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: "Nenhum funcionário com esse ID encontrado."
+          content:
+            aplication/json:
+              schema: 
+                $ref: "#/components/schemas/NotFound"
+                    
+        "400":
+          description: "Preencha os campos corretamente."
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BadRequest"
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/errorModel"
+ 
+components:
+  schemas: 
+    Employee:
+      type: object
+      properties:
+        employee_id:
+          type: string
+          example: "1"
+        first_name:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "Jonathan"
+        last_name:    
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "Felix"
+        department:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "tecnologia"
+        job_title:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "desenvolvedor"
+        employee_type:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "interno"
+        status:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "ativado"
+        start_date:
+          type: string
+          format: date-time  
+          example: "2022-05-08"
+        email:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "jhow.wi56@gmail.com"
+      required:
+        - first_name
+        - last_name
+        - department
+        - job_title
+        - employee_type
+        - start_date
+        - status
+        - email
+        
+        ## Feito com base no que "compra.yaml" que o keisuke enviou no discord. 
+    errorModel:
+      description: "Erro"
+      properties:
+        mensagem: 
+          type: object
+          example: "Erro interno."
+          
+    NotFound:
+      description: "Employee Not Found."
+      properties:
+        mensagem:
+          type: object
+          example: "Employee Not found"
+          
+    BadRequest:
+      description: "Requisição ruim "
+      properties:
+        mensagem:
+          type: object 
+          example: "Sintaxe de solicitação mal informada."
+      
+   
+        
+      
