@@ -46,12 +46,13 @@ public class EmployeeController {
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody EmployeeDTO empDTO) {
+		System.out.println("here");
 		service.update(id, empDTO);
 		return ResponseEntity.ok(empDTO);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") int id){
+	public ResponseEntity<Void> delete(@PathVariable("id") int id) {
 		service.delet(id);
 		return ResponseEntity.noContent().build();
 	}

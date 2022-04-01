@@ -3,8 +3,6 @@ package br.com.vertigo.dtos;
 import java.io.Serializable;
 import java.sql.Date;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import br.com.vertigo.entities.Employee;
 
 public class EmployeeDTO implements Serializable {
