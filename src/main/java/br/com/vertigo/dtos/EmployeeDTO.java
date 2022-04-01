@@ -39,7 +39,7 @@ public class EmployeeDTO implements Serializable {
 	public EmployeeDTO(Employee emp) {
 		employeeId = emp.getId();
 		firstName = emp.getFirstName();
-		lastName = emp.getFirstName();
+		lastName = emp.getLastName();
 		department = emp.getDepartment();
 		jobTitle = emp.getJobTitle();
 		employeeType = emp.getEmployeeType();
