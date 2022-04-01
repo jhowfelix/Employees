@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.entities.Employee;
 import br.com.vertigo.repositories.EmployeeRepository;
+import br.com.vertigo.services.exceptions.ErroInternoException;
 import br.com.vertigo.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -22,13 +23,13 @@ public class EmployeeService {
 	private EmployeeRepository repo;
 
 	@Transactional(readOnly = true)
-	public List<EmployeeDTO> findAll() {
+	public List<EmployeeDTO> findAll() throws ErroInternoException {
 		List<Employee> findAll = repo.findAll();
 		return findAll.stream().map(x -> new EmployeeDTO(x)).collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
-	public EmployeeDTO findById(int id) {
+	public EmployeeDTO findById(int id) throws ErroInternoException {
 		Optional<Employee> findById = repo.findById(id);
 		findById.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 		Employee emp = findById.get();
@@ -36,7 +37,7 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public EmployeeDTO update(int id, EmployeeDTO empDTO) throws JsonParseException {
+	public EmployeeDTO update(int id, EmployeeDTO empDTO) throws JsonParseException, ErroInternoException {
 		EmployeeDTO emp = findById(id);
 		emp.setId(id);
 		emp.setFirstName(empDTO.getFirstName());
@@ -53,11 +54,11 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public void insert(EmployeeDTO emp) throws JsonParseException {
+	public void insert(EmployeeDTO emp) throws JsonParseException, ErroInternoException {
 		repo.save(emp.toEntity());
 	}
 
-	public void delet(int id) {
+	public void delet(int id) throws ErroInternoException {
 		findById(id);
 		repo.deleteById(id);
 	}

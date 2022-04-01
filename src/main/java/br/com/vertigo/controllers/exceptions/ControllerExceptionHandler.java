@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import br.com.vertigo.services.exceptions.ErroInternoException;
 import br.com.vertigo.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -29,7 +30,14 @@ public class ControllerExceptionHandler {
 				"Sintaxe de solicitação mal informada.", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
-	
-	
+
+	@ExceptionHandler(ErroInternoException.class)
+	public ResponseEntity<StandardError> interErro(ErroInternoException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Erro", "Erro interno",
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+
+	}
 
 }
