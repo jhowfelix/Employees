@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonParseException;
+
 import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.services.EmployeeService;
 
@@ -29,7 +31,11 @@ public class EmployeeController {
 
 	@PostMapping
 	public ResponseEntity<EmployeeDTO> insert(@RequestBody EmployeeDTO empDTO) {
-		service.insert(empDTO);
+		try {
+			service.insert(empDTO);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		}
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(empDTO.getId()).toUri();
 		return ResponseEntity.created(uri).body(empDTO);
 	}
@@ -46,8 +52,12 @@ public class EmployeeController {
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody EmployeeDTO empDTO) {
-		System.out.println("here");
-		service.update(id, empDTO);
+		try {
+			service.update(id, empDTO);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ResponseEntity.ok(empDTO);
 	}
 

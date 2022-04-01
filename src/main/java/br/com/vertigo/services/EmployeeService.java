@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonParseException;
+
 import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.entities.Employee;
 import br.com.vertigo.repositories.EmployeeRepository;
@@ -34,7 +36,7 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public EmployeeDTO update(int id, EmployeeDTO empDTO) {
+	public EmployeeDTO update(int id, EmployeeDTO empDTO) throws JsonParseException {
 		EmployeeDTO emp = findById(id);
 		emp.setId(id);
 		emp.setFirstName(empDTO.getFirstName());
@@ -47,10 +49,11 @@ public class EmployeeService {
 		emp.setEmail(empDTO.getEmail());
 		repo.save(emp.toEntity());
 		return emp;
+
 	}
 
 	@Transactional
-	public void insert(EmployeeDTO emp) {
+	public void insert(EmployeeDTO emp) throws JsonParseException {
 		repo.save(emp.toEntity());
 	}
 
