@@ -3,6 +3,8 @@ package br.com.vertigo.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 
 import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.services.EmployeeService;
+import br.com.vertigo.services.exceptions.ErroInternoException;
+import br.com.vertigo.services.exceptions.ExceptionId;
 
 @RestController
 @RequestMapping(value = "/Employees")
@@ -30,7 +34,7 @@ public class EmployeeController {
 	private EmployeeService service;
 
 	@PostMapping
-	public ResponseEntity<EmployeeDTO> insert(@RequestBody EmployeeDTO empDTO) {
+	public ResponseEntity<EmployeeDTO> insert(@RequestBody @Valid EmployeeDTO empDTO) {
 		try {
 			service.insert(empDTO);
 		} catch (JsonParseException e) {
@@ -46,23 +50,23 @@ public class EmployeeController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<EmployeeDTO> findById(@PathVariable("id") int id) {
+	public ResponseEntity<EmployeeDTO> findById(@PathVariable("id") int id)
+			throws JsonParseException, ErroInternoException {
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody EmployeeDTO empDTO) {
+	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO) {
 		try {
 			service.update(id, empDTO);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
+		} catch (JsonParseException | ExceptionId e) {
 			e.printStackTrace();
 		}
 		return ResponseEntity.ok(empDTO);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") int id) {
+	public ResponseEntity<Void> delete(@PathVariable("id") int id) throws JsonParseException, ErroInternoException {
 		service.delet(id);
 		return ResponseEntity.noContent().build();
 	}

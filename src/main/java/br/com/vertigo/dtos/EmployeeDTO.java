@@ -3,18 +3,31 @@ package br.com.vertigo.dtos;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 import br.com.vertigo.entities.Employee;
 
 public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer employeeId;
+	
+	
+	
+	
 	private String firstName;
 	private String lastName;
 	private String department;
 	private String jobTitle;
 	private String employeeType;
+
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date startDate;
+
 	private String status;
 	private String email;
 
@@ -123,6 +136,13 @@ public class EmployeeDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "EmployeeDTO [employeeId=" + employeeId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", department=" + department + ", jobTitle=" + jobTitle + ", employeeType=" + employeeType
+				+ ", startDate=" + startDate + ", status=" + status + ", email=" + email + "]";
 	}
 
 }

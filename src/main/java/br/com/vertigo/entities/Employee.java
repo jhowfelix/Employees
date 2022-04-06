@@ -9,6 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Table(name = "employees")
 @Entity
@@ -20,28 +25,39 @@ public class Employee implements Serializable {
 	@Column(name = "employee_id")
 	private Integer employeeId;
 
-	@Column(name = "first_name", length = 45)
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
+	@Size(min = 2, max = 55)
+	@Column(name = "first_name")	
 	private String firstName;
 
-	@Column(name = "last_name", length = 45)
+	
+	@Size(min = 2, max = 55)
+	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "department", length = 45)
+	@Size(min = 2, max = 55)
+	@Column(name = "department")
 	private String department;
 
-	@Column(name = "job_title", length = 45)
+	@Size(min = 2, max = 55)
+	@Column(name = "job_title")
 	private String jobTitle;
 
-	@Column(name = "employee_type", length = 45)
+	@Size(min = 2, max = 55)
+	@Column(name = "employee_type")
 	private String employeeType;
 
-	@Column(name = "start_date", length = 45)
+	@Column(name = "start_date")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date startDate;
 
-	@Column(name = "status", length = 45)
+	@Size(min = 2, max = 55)
+	@Column(name = "status")
 	private String status;
 
-	@Column(name = "email", length = 45)
+	@Email
+	@Size(min = 2, max = 55)
+	@Column(name = "email")
 	private String email;
 
 	public Employee() {

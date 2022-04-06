@@ -29,7 +29,7 @@ public class EmployeeService {
 	}
 
 	@Transactional(readOnly = true)
-	public EmployeeDTO findById(int id) throws ErroInternoException {
+	public EmployeeDTO findById(int id) throws ErroInternoException, JsonParseException {
 		Optional<Employee> findById = repo.findById(id);
 		findById.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 		Employee emp = findById.get();
@@ -54,11 +54,11 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public void insert(EmployeeDTO emp) throws JsonParseException, ErroInternoException {
+	public void insert(EmployeeDTO emp) throws JsonParseException {
 		repo.save(emp.toEntity());
 	}
 
-	public void delet(int id) throws ErroInternoException {
+	public void delet(int id) throws ErroInternoException, JsonParseException {
 		findById(id);
 		repo.deleteById(id);
 	}
