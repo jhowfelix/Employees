@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,7 +24,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.services.EmployeeService;
 import br.com.vertigo.services.exceptions.ErroInternoException;
-import br.com.vertigo.services.exceptions.ExceptionId;
 
 @RestController
 @RequestMapping(value = "/Employees")
@@ -59,7 +59,7 @@ public class EmployeeController {
 	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO) {
 		try {
 			service.update(id, empDTO);
-		} catch (JsonParseException | ExceptionId e) {
+		} catch (JsonParseException e) {
 			e.printStackTrace();
 		}
 		return ResponseEntity.ok(empDTO);
@@ -69,6 +69,13 @@ public class EmployeeController {
 	public ResponseEntity<Void> delete(@PathVariable("id") int id) throws JsonParseException, ErroInternoException {
 		service.delet(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PatchMapping(value = "/{id}")
+	public ResponseEntity<EmployeeDTO> updatePath(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO) throws JsonParseException, ErroInternoException{
+		service.updatePatch(id, empDTO);
+		return ResponseEntity.ok(empDTO);
+		
 	}
 
 }

@@ -13,7 +13,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Table(name = "employees")
 @Entity
@@ -25,6 +24,8 @@ public class Employee implements Serializable {
 	@Column(name = "employee_id")
 	private Integer employeeId;
 
+	
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@Size(min = 2, max = 55)
 	@Column(name = "first_name")	

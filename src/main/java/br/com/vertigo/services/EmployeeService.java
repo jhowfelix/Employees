@@ -31,7 +31,7 @@ public class EmployeeService {
 	@Transactional(readOnly = true)
 	public EmployeeDTO findById(int id) throws ErroInternoException, JsonParseException {
 		Optional<Employee> findById = repo.findById(id);
-		findById.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+		findById.orElseThrow(() -> new ObjectNotFoundException("Employee not Found"));
 		Employee emp = findById.get();
 		return new EmployeeDTO(emp);
 	}
@@ -61,6 +61,40 @@ public class EmployeeService {
 	public void delet(int id) throws ErroInternoException, JsonParseException {
 		findById(id);
 		repo.deleteById(id);
+	}
+	
+	public void updatePatch(int id, EmployeeDTO empDTO) throws JsonParseException, ErroInternoException {
+		EmployeeDTO EmpAtt = validaNull(empDTO, findById(id));
+		EmpAtt.setId(id);
+		insert(EmpAtt);
+	}
+
+	public EmployeeDTO validaNull(EmployeeDTO request, EmployeeDTO doBanco) {
+		if (request.getFirstName() == null) {
+			request.setFirstName(doBanco.getFirstName());
+		}
+		if (request.getLastName() == null) {
+			request.setLastName(doBanco.getLastName());
+		}
+		if (request.getDepartment() == null) {
+			request.setDepartment(doBanco.getDepartment());
+		}
+		if (request.getEmail() == null) {
+			request.setEmail(doBanco.getEmail());
+		}
+		if (request.getJobTitle() == null) {
+			request.setJobTitle(doBanco.getJobTitle());
+		}
+		if (request.getEmployeeType() == null) {
+			request.setEmployeeType(doBanco.getEmployeeType());
+		}
+		if (request.getStartDate() == null) {
+			request.setStartDate(doBanco.getStartDate());
+		}
+		if (request.getStatus() == null) {
+			request.setStatus(doBanco.getStatus());
+		}
+		return request;
 	}
 
 }

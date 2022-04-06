@@ -25,7 +25,6 @@ public class ControllerExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 
-	
 	@ExceptionHandler(JsonParseException.class)
 	public ResponseEntity<StandardError> badRequest(JsonParseException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -39,6 +38,7 @@ public class ControllerExceptionHandler {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), e.getMessage(),
 				request.getRequestURI());
+		
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -47,6 +47,7 @@ public class ControllerExceptionHandler {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), e.getMessage(),
 				request.getRequestURI());
+		System.out.println("Cai aqui");
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -65,4 +66,6 @@ public class ControllerExceptionHandler {
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	
 }

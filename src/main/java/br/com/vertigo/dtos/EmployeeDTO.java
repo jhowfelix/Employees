@@ -3,11 +3,7 @@ package br.com.vertigo.dtos;
 import java.io.Serializable;
 import java.sql.Date;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 import br.com.vertigo.entities.Employee;
 
@@ -15,11 +11,10 @@ public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer employeeId;
-	
-	
-	
-	
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private String firstName;
+
 	private String lastName;
 	private String department;
 	private String jobTitle;
