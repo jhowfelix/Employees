@@ -25,7 +25,7 @@ paths:
       responses: 
         "200":
           description: "OK"
-          content:
+          content:  
             application/json:
               schema:
                 $ref: "#/components/schemas/Employee"
@@ -249,7 +249,7 @@ components:
         start_date:
           type: string
           format: date  
-          example: "08-05-2002"
+          example: "08/05/2002"
         email:
           type: string
           minLength: 2
@@ -261,9 +261,9 @@ components:
       description: "Formato json de exceção."
       properties:
         timestamp:
-          type: integer
-          format: int64
-          example: 1649183432761
+          type: string
+          format: date
+          example: "07/04/2022 16:23:01"
         status:
           type: integer
           example: 500 
@@ -277,9 +277,9 @@ components:
     NotFound:
       properties:
         timestamp:
-          type: integer
-          format: int64
-          example: 1649265755868
+          type: string
+          format: date
+          example: "07/04/2022 16:23:01"
         status: 
           type: integer
           example: 404
@@ -293,9 +293,9 @@ components:
     BadRequest:
       properties:
         timestamp:
-          type: integer
-          format: int64
-          example: 1649265755868
+          type: string
+          format: date
+          example: "107/04/2022 16:23:01"
         status: 
           type: integer
           example: 400

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime timestamp;
 	private Integer status;
 	private String message;
