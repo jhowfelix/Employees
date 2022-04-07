@@ -2,7 +2,7 @@ openapi: 3.0.1
 info: 
   title: "CRUD DE UM FUNCIONÁRIO."
   description: "Ler, cadastrar, editar e deletar um funcionário do banco de dados"
-  version: 0.0.4
+  version: 0.0.7
   contact:
     name: "Vertigo tecnologia"
     email: suport@vertigo.com.br
@@ -35,9 +35,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/errorModel"
-               
-                
+                $ref: "#/components/schemas/StandardError"     
     post:
       tags:
         - "Funcionário"
@@ -60,14 +58,50 @@ paths:
           content:
             application/json:
               schema: 
-                $ref: "#/components/schemas/NotFound"
+                $ref: "#/components/schemas/BadRequest"
         "500":
           description: "Erro interno"
           content:
             application/json:
               schema:
-               $ref: "#/components/schemas/errorModel"
- 
+               $ref: "#/components/schemas/StandardError"
+    patch:
+        tags: 
+         - "Funcionário"
+        summary: "Atualizar os dados de um funcionário."
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Employee"
+        responses:
+          "201":
+              description: "Atualizado com sucesso"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/Employee"
+          "400":
+            description: "Preencha os campos corretamente."
+            content:
+              application/json:
+                schema: 
+                  $ref: "#/components/schemas/BadRequest"
+          "404":
+            description: "Nenhum funcionário com esse ID encontrado."
+            content:
+              aplication/json:
+                schema: 
+                  $ref: "#/components/schemas/NotFound"
+          
+          "500":
+            description: "Erro interno"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/StandardError"
+
     ## BUSCAR TODOS, DELETAR, E ATUALIZAR. 
     
   /employee/{id}:
@@ -75,7 +109,7 @@ paths:
     - name: id
       in: path
       schema: 
-        type: string
+        type: integer
       required: true
       
               ## BUSCAR POR ID. 
@@ -97,7 +131,7 @@ paths:
               schema: 
                  $ref: "#/components/schemas/NotFound"
         "400":
-          description: "Preencha os campos corretamente."
+          description: "Preencha o id corretamente."
           content:
             application/json:
               schema: 
@@ -107,7 +141,7 @@ paths:
           content:
             application/json:
               schema:
-               $ref: "#/components/schemas/errorModel"
+               $ref: "#/components/schemas/StandardError"
         
                ## DELETAR
     delete:
@@ -133,7 +167,7 @@ paths:
           content:
             application/json:
               schema:
-               $ref: "#/components/schemas/errorModel"        
+               $ref: "#/components/schemas/StandardError"        
                
                 ## ATUALIZAR
     put:
@@ -171,7 +205,7 @@ paths:
           content:
             application/json:
               schema:
-               $ref: "#/components/schemas/errorModel"
+               $ref: "#/components/schemas/StandardError"
  
 components:
   schemas: 
@@ -179,11 +213,12 @@ components:
       type: object
       properties:
         employee_id:
-          type: string
-          example: "1"
+          type: integer
+          format: int64
+          example: 20
         first_name:
           type: string
-          minLength: 2
+          minLength: 2 
           maxLength: 45
           example: "Jonathan"
         last_name:    
@@ -213,45 +248,61 @@ components:
           example: "ativado"
         start_date:
           type: string
-          format: date-time  
-          example: "2022-05-08"
+          format: date  
+          example: "08-05-2002"
         email:
           type: string
           minLength: 2
           maxLength: 45
           example: "jhow.wi56@gmail.com"
-      required:
-        - first_name
-        - last_name
-        - department
-        - job_title
-        - employee_type
-        - start_date
-        - status
-        - email
         
         ## Feito com base no que "compra.yaml" que o keisuke enviou no discord. 
-    errorModel:
-      description: "Erro"
+    StandardError:
+      description: "Formato json de exceção."
       properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1649183432761
+        status:
+          type: integer
+          example: 500 
         mensagem: 
-          type: object
+          type: string
           example: "Erro interno."
+        path:
+          type: string
+          example: "/Employees/asdw"
           
     NotFound:
-      description: "Employee Not Found."
       properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1649265755868
+        status: 
+          type: integer
+          example: 404
         mensagem:
-          type: object
+          type: string
           example: "Employee Not found"
-          
+        path: 
+          type: string
+          example: "/Employees/900"
+
     BadRequest:
-      description: "Requisição ruim "
       properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1649265755868
+        status: 
+          type: integer
+          example: 400
         mensagem:
-          type: object 
-          example: "Sintaxe de solicitação mal informada."
-      
-   
-        
+          type: string
+          example: "Json mal Informado"
+        path: 
+          type: string
+          example: "/Employees/"
       

@@ -10,6 +10,8 @@ import br.com.vertigo.entities.Employee;
 public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	
+	
 	private Integer employeeId;
 	private String firstName;
 	private String lastName;
