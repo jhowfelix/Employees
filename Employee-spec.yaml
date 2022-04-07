@@ -218,17 +218,17 @@ components:
           example: 20
         first_name:
           type: string
-          minLength: 2 
+          minLength: 1 
           maxLength: 45
           example: "Jonathan"
         last_name:    
           type: string
-          minLength: 2
+          minLength: 1
           maxLength: 45
           example: "Felix"
         department:
           type: string
-          minLength: 2
+          minLength: 1
           maxLength: 45
           example: "tecnologia"
         job_title:
@@ -238,12 +238,12 @@ components:
           example: "desenvolvedor"
         employee_type:
           type: string
-          minLength: 2
+          minLength: 1
           maxLength: 45
           example: "interno"
         status:
           type: string
-          minLength: 2
+          minLength: 1
           maxLength: 45
           example: "ativado"
         start_date:
@@ -252,7 +252,7 @@ components:
           example: "08/05/2002"
         email:
           type: string
-          minLength: 2
+          minLength: 1
           maxLength: 45
           example: "jhow.wi56@gmail.com"
         
