@@ -40,7 +40,8 @@ public class EmployeeController {
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		}
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(empDTO.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(empDTO.getEmployeeId())
+				.toUri();
 		return ResponseEntity.created(uri).body(empDTO);
 	}
 
@@ -56,13 +57,10 @@ public class EmployeeController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO) {
-		try {
-			service.update(id, empDTO);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		}
-		return ResponseEntity.ok(empDTO);
+	public ResponseEntity<EmployeeDTO> update(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO)
+			throws JsonParseException, ErroInternoException {
+		EmployeeDTO update = service.update(id, empDTO);
+		return ResponseEntity.ok(update);
 	}
 
 	@DeleteMapping(value = "/{id}")
@@ -70,12 +68,13 @@ public class EmployeeController {
 		service.delet(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<EmployeeDTO> updatePath(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO) throws JsonParseException, ErroInternoException{
+	public ResponseEntity<EmployeeDTO> updatePath(@PathVariable("id") int id, @RequestBody @Valid EmployeeDTO empDTO)
+			throws JsonParseException, ErroInternoException {
 		service.updatePatch(id, empDTO);
 		return ResponseEntity.ok(empDTO);
-		
+
 	}
 
 }

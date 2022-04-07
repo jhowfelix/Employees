@@ -24,14 +24,11 @@ public class Employee implements Serializable {
 	@Column(name = "employee_id")
 	private Integer employeeId;
 
-	
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@Size(min = 2, max = 55)
-	@Column(name = "first_name")	
+	@Column(name = "first_name")
 	private String firstName;
 
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@Size(min = 2, max = 55)
 	@Column(name = "last_name")
 	private String lastName;
@@ -77,6 +74,14 @@ public class Employee implements Serializable {
 		this.startDate = startDate;
 		this.status = status;
 		this.email = email;
+	}
+
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public String getFirstName() {
@@ -141,10 +146,6 @@ public class Employee implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Integer getId() {
-		return employeeId;
 	}
 
 }

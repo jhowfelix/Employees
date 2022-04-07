@@ -11,18 +11,13 @@ public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer employeeId;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private String firstName;
-
 	private String lastName;
 	private String department;
 	private String jobTitle;
 	private String employeeType;
-
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date startDate;
-
 	private String status;
 	private String email;
 
@@ -45,7 +40,7 @@ public class EmployeeDTO implements Serializable {
 	}
 
 	public EmployeeDTO(Employee emp) {
-		employeeId = emp.getId();
+		employeeId = emp.getEmployeeId();
 		firstName = emp.getFirstName();
 		lastName = emp.getLastName();
 		department = emp.getDepartment();
@@ -61,12 +56,12 @@ public class EmployeeDTO implements Serializable {
 				this.employeeType, this.startDate, this.status, this.email);
 	}
 
-	public Integer getId() {
+	public Integer getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setId(Integer id) {
-		this.employeeId = id;
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public String getFirstName() {

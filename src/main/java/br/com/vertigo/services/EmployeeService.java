@@ -39,7 +39,7 @@ public class EmployeeService {
 	@Transactional
 	public EmployeeDTO update(int id, EmployeeDTO empDTO) throws JsonParseException, ErroInternoException {
 		EmployeeDTO emp = findById(id);
-		emp.setId(id);
+		emp.setEmployeeId(id);
 		emp.setFirstName(empDTO.getFirstName());
 		emp.setLastName(empDTO.getLastName());
 		emp.setDepartment(empDTO.getDepartment());
@@ -50,7 +50,6 @@ public class EmployeeService {
 		emp.setEmail(empDTO.getEmail());
 		repo.save(emp.toEntity());
 		return emp;
-
 	}
 
 	@Transactional
@@ -62,10 +61,10 @@ public class EmployeeService {
 		findById(id);
 		repo.deleteById(id);
 	}
-	
+
 	public void updatePatch(int id, EmployeeDTO empDTO) throws JsonParseException, ErroInternoException {
 		EmployeeDTO EmpAtt = validaNull(empDTO, findById(id));
-		EmpAtt.setId(id);
+		EmpAtt.setEmployeeId(id);
 		insert(EmpAtt);
 	}
 
