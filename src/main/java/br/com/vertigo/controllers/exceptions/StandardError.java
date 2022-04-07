@@ -1,20 +1,26 @@
 package br.com.vertigo.controllers.exceptions;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long timestamp;
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	private LocalDateTime timestamp;
 	private Integer status;
 	private String message;
 	private String path;
+	
+
 
 	public StandardError() {
 		super();
 	}
 
-	public StandardError(Long timestamp, Integer status, String message, String path) {
+	public StandardError(  LocalDateTime timestamp, Integer status, String message, String path) {
 		super();
 		this.timestamp = timestamp;
 		this.status = status;
@@ -22,11 +28,11 @@ public class StandardError implements Serializable {
 		this.path = path;
 	}
 
-	public Long getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Long timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
