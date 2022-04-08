@@ -15,6 +15,7 @@ import br.com.vertigo.entities.Employee;
 import br.com.vertigo.repositories.EmployeeRepository;
 import br.com.vertigo.services.exceptions.ErroInternoException;
 import br.com.vertigo.services.exceptions.ObjectNotFoundException;
+import br.com.vertigo.services.exceptions.ValidBoolean;
 
 @Service
 public class EmployeeService {
@@ -54,7 +55,22 @@ public class EmployeeService {
 
 	@Transactional
 	public void insert(EmployeeDTO emp) throws JsonParseException {
-		repo.save(emp.toEntity());
+		if (emp.getFirstName().equals("true")|| emp.getFirstName().equals("false")) {
+			throw new ValidBoolean("não permitido valores boleanos");
+		} else if (emp.getLastName().equals("true") || emp.getLastName().equals("false")) {
+			throw new ValidBoolean("não permitido valores boleanos");
+		} else if (emp.getDepartment().equals("true") || emp.getDepartment().equals("false")) {
+			throw new ValidBoolean("não permitido valores boleanos");
+		} else if (emp.getJobTitle().equals("true")|| emp.getJobTitle().equals("false")) {
+			throw new ValidBoolean("não permitido valores boleanos");
+		}  else if (emp.getEmployeeType().equals("true") || emp.getEmployeeType().equals("false")) {
+			throw new ValidBoolean("não permitido valores boleanos");
+		} else if (emp.getStatus().equals("true") || emp.getStatus().equals("false")) {
+			throw new ValidBoolean("não permitido valores boleanos");
+		} else {
+			repo.save(emp.toEntity());
+		}
+
 	}
 
 	public void delet(int id) throws ErroInternoException, JsonParseException {

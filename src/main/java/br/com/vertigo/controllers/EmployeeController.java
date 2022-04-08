@@ -34,7 +34,7 @@ public class EmployeeController {
 	private EmployeeService service;
 
 	@PostMapping
-	public ResponseEntity<EmployeeDTO> insert(@RequestBody @Valid EmployeeDTO empDTO) {
+	public ResponseEntity<EmployeeDTO> insert(@Valid @RequestBody  EmployeeDTO empDTO) {
 		try {
 			service.insert(empDTO);
 		} catch (JsonParseException e) {
