@@ -1,6 +1,8 @@
 package br.com.vertigo.services.exceptions;
 
 public class ValidBoolean extends RuntimeException {
+	
+	
 	/**
 	 * 
 	 */
