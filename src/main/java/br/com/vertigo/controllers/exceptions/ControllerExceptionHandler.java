@@ -73,17 +73,19 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validationInt(MethodArgumentNotValidException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(LocalDateTime.now(), status.value(), e.getMessage().toString(),
+		StandardError err = new StandardError(LocalDateTime.now(), status.value(), e.getMessage()+ "asdw".toString(),
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
 	@ExceptionHandler(ValidBoolean.class)
-	public ResponseEntity<StandardError> validationInt(ValidBoolean e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> validationBoolean(ValidBoolean e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(LocalDateTime.now(), status.value(), e.getMessage().toString(),
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+	
+
 
 }

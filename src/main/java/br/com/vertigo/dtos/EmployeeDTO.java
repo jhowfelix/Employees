@@ -17,28 +17,30 @@ public class EmployeeDTO implements Serializable {
 	private Integer employeeId;
 
 	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
-	@Size(min = 1, max = 55)
+	@Size(min = 1, max = 45)
 	private String firstName;
 
-	@Size(min = 1, max = 55)
+	@Size(min = 1, max = 45)
 	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String lastName;
 
-	@Size(min = 1, max = 55)
+	@Size(min = 1, max = 45)
 	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String department;
 
-	@Size(min = 1, max = 55)
+	@Size(min = 1, max = 45)
 	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String jobTitle;
-	@Size(min = 1, max = 55)
+	
+	@Size(min = 1, max = 45)
 	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String employeeType;
-
+	
+	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date startDate;
 
-	@Size(min = 1, max = 55)
+	@Size(min = 1, max = 45)
 	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String status;
 

@@ -110,6 +110,8 @@ paths:
       in: path
       schema: 
         type: integer
+        minLength: 1
+        maxLength: 2147483647
       required: true
       
               ## BUSCAR POR ID. 
