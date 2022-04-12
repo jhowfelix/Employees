@@ -110,6 +110,8 @@ paths:
       in: path
       schema: 
         type: integer
+        minLength: 1
+        maxLength: 2147483647
       required: true
       
               ## BUSCAR POR ID. 
@@ -258,7 +260,7 @@ components:
         
         ## Feito com base no que "compra.yaml" que o keisuke enviou no discord. 
     StandardError:
-      description: "Formato json de exceção."
+      description: "Formato json da exceção."
       properties:
         timestamp:
           type: string
@@ -305,4 +307,5 @@ components:
         path: 
           type: string
           example: "/Employees/"
-      
+    
+    

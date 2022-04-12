@@ -3,6 +3,10 @@ package br.com.vertigo.dtos;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.vertigo.entities.Employee;
@@ -11,14 +15,36 @@ public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer employeeId;
+
+	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
+	@Size(min = 1, max = 45)
 	private String firstName;
+
+	@Size(min = 1, max = 45)
+	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String lastName;
+
+	@Size(min = 1, max = 45)
+	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String department;
+
+	@Size(min = 1, max = 45)
+	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String jobTitle;
+	
+	@Size(min = 1, max = 45)
+	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String employeeType;
+	
+	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date startDate;
+
+	@Size(min = 1, max = 45)
+	@Pattern(regexp = "^[a-zA-Z-à-ú-À-Ú+\s]+$")
 	private String status;
+
+	@Email
 	private String email;
 
 	public EmployeeDTO() {

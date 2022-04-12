@@ -9,10 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Table(name = "employees")
 @Entity
@@ -24,37 +20,27 @@ public class Employee implements Serializable {
 	@Column(name = "employee_id")
 	private Integer employeeId;
 
-	@Size(min = 1, max = 55)
 	@Column(name = "first_name")
 	private String firstName;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@Size(min = 1, max = 55)
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Size(min = 1, max = 55)
 	@Column(name = "department")
 	private String department;
 
-	@Size(min = 1, max = 55)
 	@Column(name = "job_title")
 	private String jobTitle;
 
-	@Size(min = 1, max = 55)
 	@Column(name = "employee_type")
 	private String employeeType;
 
 	@Column(name = "start_date")
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date startDate;
 
-	@Size(min = 1, max = 55)
 	@Column(name = "status")
 	private String status;
 
-	@Email
-	@Size(min = 1, max = 55)
 	@Column(name = "email")
 	private String email;
 

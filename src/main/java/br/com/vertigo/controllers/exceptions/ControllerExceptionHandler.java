@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -15,11 +16,10 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import br.com.vertigo.services.exceptions.ErroInternoException;
 import br.com.vertigo.services.exceptions.ObjectNotFoundException;
+import br.com.vertigo.services.exceptions.ValidBoolean;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
-	
-	
 
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
@@ -69,5 +69,23 @@ public class ControllerExceptionHandler {
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validationInt(MethodArgumentNotValidException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(LocalDateTime.now(), status.value(), e.getMessage()+ "asdw".toString(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(ValidBoolean.class)
+	public ResponseEntity<StandardError> validationBoolean(ValidBoolean e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(LocalDateTime.now(), status.value(), e.getMessage().toString(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+
 
 }
