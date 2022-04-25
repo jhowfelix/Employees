@@ -1,5 +1,9 @@
 package br.com.vertigo.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mockitoSession;
+
 import java.sql.Date;
 import java.util.Optional;
 
@@ -18,6 +22,7 @@ import br.com.vertigo.dtos.EmployeeDTO;
 import br.com.vertigo.entities.Employee;
 import br.com.vertigo.repositories.EmployeeRepository;
 import br.com.vertigo.services.exceptions.ErroInternoException;
+import br.com.vertigo.services.exceptions.ObjectNotFoundException;
 
 @SpringBootTest
 public class EmployeeServiceTest {
@@ -39,7 +44,6 @@ public class EmployeeServiceTest {
 	private static final String NOME = "Andre";
 
 	private static final int ID = 123;
-	
 
 	@InjectMocks
 	private EmployeeService service;
@@ -66,8 +70,19 @@ public class EmployeeServiceTest {
 		// Método falhando
 		// Assertions.assertEquals(EmployeeDTO.class, optionalEmp.getClass());
 		Assertions.assertEquals(EmployeeDTO.class, response.getClass());
-		//Comparando id.
+		// Comparando id.
 		Assertions.assertEquals(ID, response.getEmployeeId());
+	}
+
+	@Test
+	void whenFindByIdThenReturnAnObjectNotFoundException() {
+		Mockito.when(repo.findById(anyInt())).thenThrow(new ObjectNotFoundException("Not found"));
+		try {
+			service.findById(1L);
+		} catch(Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			
+		}
 	}
 
 	@Test
@@ -91,10 +106,10 @@ public class EmployeeServiceTest {
 	}
 
 	private void startEmployee() {
-		EmployeeDTO empDTO = new EmployeeDTO(ID, NOME, ULTIMONOME, DEPARTAMENTO, JOBTITLE, TYPE, START_DATE,
-				STATUS, EMAIL);
-		optionalEmp = Optional.of(new Employee(ID, NOME, ULTIMONOME, DEPARTAMENTO, JOBTITLE, TYPE, START_DATE,
-				STATUS, EMAIL));
+		EmployeeDTO empDTO = new EmployeeDTO(ID, NOME, ULTIMONOME, DEPARTAMENTO, JOBTITLE, TYPE, START_DATE, STATUS,
+				EMAIL);
+		optionalEmp = Optional
+				.of(new Employee(ID, NOME, ULTIMONOME, DEPARTAMENTO, JOBTITLE, TYPE, START_DATE, STATUS, EMAIL));
 	}
 
 }
