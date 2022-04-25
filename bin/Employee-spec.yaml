@@ -1,0 +1,311 @@
+openapi: 3.0.1
+info: 
+  title: "CRUD DE UM FUNCIONÁRIO."
+  description: "Ler, cadastrar, editar e deletar um funcionário do banco de dados"
+  version: 0.0.7
+  contact:
+    name: "Vertigo tecnologia"
+    email: suport@vertigo.com.br
+    url: https://vertigo.com.br/
+  license: 
+    name: "LICENÇA: GPLV3"
+    url: https://gplv3.fsf.org/
+externalDocs:
+  description: "Documentação burocrática."
+  url: https://vertigo.com.br/
+servers:
+- url: https://623c91787efb5abea6836f4c.mockapi.io/CRUD/
+  description: "MockAPI, api de teste"
+paths:
+  /employee:    ## BUSCAR TODOS, INSERIR UM NOVO.
+    get: 
+      tags:
+        - "Funcionário"
+      summary: "Buscando todos funcionários da nossa base de dados."
+      responses: 
+        "200":
+          description: "OK"
+          content:  
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+                
+        "500":
+          description: "Erro interno."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StandardError"     
+    post:
+      tags:
+        - "Funcionário"
+      summary: "Cadastrar um novo funcionário." 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses: 
+        "201":
+          description: "Criado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          description: "Preencha os campos corretamente."
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BadRequest"
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/StandardError"
+    patch:
+        tags: 
+         - "Funcionário"
+        summary: "Atualizar os dados de um funcionário."
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Employee"
+        responses:
+          "201":
+              description: "Atualizado com sucesso"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/Employee"
+          "400":
+            description: "Preencha os campos corretamente."
+            content:
+              application/json:
+                schema: 
+                  $ref: "#/components/schemas/BadRequest"
+          "404":
+            description: "Nenhum funcionário com esse ID encontrado."
+            content:
+              aplication/json:
+                schema: 
+                  $ref: "#/components/schemas/NotFound"
+          
+          "500":
+            description: "Erro interno"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/StandardError"
+
+    ## BUSCAR TODOS, DELETAR, E ATUALIZAR. 
+    
+  /employee/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema: 
+        type: integer
+        minLength: 1
+        maxLength: 2147483647
+      required: true
+      
+              ## BUSCAR POR ID. 
+    get: 
+      tags:
+      - "Funcionário"
+      summary: "Buscando um funcionário por meio do ID."
+      responses:
+        "200": 
+          description: "OK"
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: "Nenhum funcionário com esse ID encontrado."
+          content:
+            aplication/json:
+              schema: 
+                 $ref: "#/components/schemas/NotFound"
+        "400":
+          description: "Preencha o id corretamente."
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BadRequest"
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/StandardError"
+        
+               ## DELETAR
+    delete:
+      tags:
+        - "Funcionário"
+      summary: "Deletar um funcionário por meio do ID"
+      responses:
+        "204":
+          description: "OK"
+          content: 
+            application/json:
+              example: "No content"
+        
+        "404":
+          description: "Nenhum funcionário com esse ID encontrado."
+          content:
+            aplication/json:
+              schema: 
+                $ref: "#/components/schemas/NotFound"
+                
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/StandardError"        
+               
+                ## ATUALIZAR
+    put:
+      tags:
+        - "Funcionário"
+      summary: "Atualizar os dados de um funcionário por meio do ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: "Nenhum funcionário com esse ID encontrado."
+          content:
+            aplication/json:
+              schema: 
+                $ref: "#/components/schemas/NotFound"
+                    
+        "400":
+          description: "Preencha os campos corretamente."
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BadRequest"
+        "500":
+          description: "Erro interno"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/StandardError"
+ 
+components:
+  schemas: 
+    Employee:
+      type: object
+      properties:
+        employee_id:
+          type: integer
+          format: int64
+          example: 20
+        first_name:
+          type: string
+          minLength: 1 
+          maxLength: 45
+          example: "Jonathan"
+        last_name:    
+          type: string
+          minLength: 1
+          maxLength: 45
+          example: "Felix"
+        department:
+          type: string
+          minLength: 1
+          maxLength: 45
+          example: "tecnologia"
+        job_title:
+          type: string
+          minLength: 2
+          maxLength: 45
+          example: "desenvolvedor"
+        employee_type:
+          type: string
+          minLength: 1
+          maxLength: 45
+          example: "interno"
+        status:
+          type: string
+          minLength: 1
+          maxLength: 45
+          example: "ativado"
+        start_date:
+          type: string
+          format: date  
+          example: "08/05/2002"
+        email:
+          type: string
+          minLength: 1
+          maxLength: 45
+          example: "jhow.wi56@gmail.com"
+        
+        ## Feito com base no que "compra.yaml" que o keisuke enviou no discord. 
+    StandardError:
+      description: "Formato json da exceção."
+      properties:
+        timestamp:
+          type: string
+          format: date
+          example: "07/04/2022 16:23:01"
+        status:
+          type: integer
+          example: 500 
+        mensagem: 
+          type: string
+          example: "Erro interno."
+        path:
+          type: string
+          example: "/Employees/asdw"
+          
+    NotFound:
+      properties:
+        timestamp:
+          type: string
+          format: date
+          example: "07/04/2022 16:23:01"
+        status: 
+          type: integer
+          example: 404
+        mensagem:
+          type: string
+          example: "Employee Not found"
+        path: 
+          type: string
+          example: "/Employees/900"
+
+    BadRequest:
+      properties:
+        timestamp:
+          type: string
+          format: date
+          example: "107/04/2022 16:23:01"
+        status: 
+          type: integer
+          example: 400
+        mensagem:
+          type: string
+          example: "Json mal Informado"
+        path: 
+          type: string
+          example: "/Employees/"
+    
+    
